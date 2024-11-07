@@ -1,4 +1,15 @@
-const posts = [
+interface Post {
+  id: string;
+  title: string;
+  body: string;
+}
+
+interface NormalizeData {
+  byId: { [id: string]: Post };
+  allIds: string[];
+}
+
+const posts: Post[] = [
   {
     id: "62e69d5a5458aac0ed320b35",
     title: "id labore ex et quam laborum",
@@ -36,8 +47,16 @@ const posts = [
   },
 ];
 
-const normalizeData = (unnormalizedData) => {
-  // Your code here...
+const normalizeData = (unnormalizedData: Post[]): NormalizeData => {
+  let byId: { [id: string]: Post } = {};
+  let allIds: string[] = [];
+
+  unnormalizedData.map((item: Post) => {
+    byId = { ...byId, [item.id]: item };
+    allIds = [...allIds, item.id];
+  });
+
+  return { byId, allIds };
 };
 
 console.log(normalizeData(posts));
